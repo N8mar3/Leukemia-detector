@@ -66,7 +66,8 @@ def count(n):
             ]
     return vals
 
-
+# add some changes
+# add some changes again
 # champion: print(2 ** (2 ** n))
 vals_1 = sorted(count(n[0]), key=lambda x : x[1])
 vals_2 = sorted(count(n[1]), key=lambda x : x[1])
