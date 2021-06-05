@@ -9,16 +9,18 @@ File map:
 2. distributor -- main pipeline
 
 DataBuilder:
-1. Take the input data and chunck into 16 pieses(normalizing 'll be added later)
-2. Putting into PyTorchs dataloader;
+1. Take the input data and chunk it into 16 pieces(normalizing will be added later),
+2. Putting into PyTorchs data loader;
 
 Model:
 1. defining the model and parameters to work with (U-Net architecture);
 
-Predictor (standart prediction step);
+Predictor:
+1. Standart prediction step,
+2. Putting together previously chunked data;
 
 Utility worker:
-1. Count the division between "bad/good" cells amout,
+1. Count the division between "bad/good" cells,
 2. Makes edge-map from predicted data (using canny edge filter),
 3. Applies this map onto an input image,
-4. Visualisating processed data.
+4. Visualisation processed data.
