@@ -20,21 +20,17 @@ class Predictor:
 
         return decoded_data
 
-    def predictor(self,
-                  switch: bool = True):
+    def predictor(self):
         self.model.load_state_dict(torch.load(self.model_name))
         self.model.eval()
+        prediction = []
         with torch.no_grad():
             for x in self.loader:
                 x = x.to(self.device, dtype=torch.float)
                 x = torch.movedim(x, -1, 1)
-                prediction = torch.sigmoid(self.model(x))
-                if switch:
-                    m_tensor, switch = prediction, False
-                else:
-                    m_tensor = torch.cat((m_tensor, prediction), 0)
+                prediction.append(torch.sigmoid(self.model(x)))
 
-        return m_tensor
+        return torch.cat(prediction, 0)
 
     @staticmethod
     def data_decoder(prediction):
@@ -43,11 +39,10 @@ class Predictor:
                torch.where(data[1] > 0.3, 2, 0)
         data = torch.where(data == 3, 1, data)
         data_chunked = torch.stack(torch.chunk(data, 4), 0)
-        data_chunked_t = data_chunked
         for i in range(data_chunked.shape[0]):
-            data_i_row.append(torch.cat((data_chunked_t[i][0],
-                                         data_chunked_t[i][1],
-                                         data_chunked_t[i][2],
-                                         data_chunked_t[i][3]), 0))
+            data_i_row.append(torch.cat((data_chunked[i][0],
+                                         data_chunked[i][1],
+                                         data_chunked[i][2],
+                                         data_chunked[i][3]), 0))
 
         return torch.cat(data_i_row, 1)

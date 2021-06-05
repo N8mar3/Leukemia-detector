@@ -1,6 +1,6 @@
 {
-"data_path": "//test_images/*.bmp",
-"model_name": "//models/Unet_new_structure_50_epoch.pth",
+"data_path": "../test_images/valid_all_good.bmp",
+"model_name": "../model/Unet_new_structure_50_epoch.pth",
 "device": "cuda:0",
 "warning_m": 0.19
 }
